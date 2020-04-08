@@ -101,6 +101,22 @@ app.post('/auth/login', (req, res, next) => {
      res.redirect('/');
  }) 
 
+app.get('/post', (req, res, next) => {
+    res.render('post',{title : "test", user : req.user} );
+
+})
+
+app.post('/post', async (req, res, next)=>{
+    const {title, content, date, start, end} = req.body;
+    try{
+        console.log(title, content, typeof(date), typeof(start), typeof(end));
+        res.redirect('/');
+    }catch(error){
+        console.error(error);
+        next(error);
+    }
+})
+
 app.use((req, res, next) => {
   const err = new Error('Not Found');
   err.status = 404;
