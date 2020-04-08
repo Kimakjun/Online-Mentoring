@@ -1,0 +1,55 @@
+  body {
+      margin: 0;
+      box-sizing: border-box;
+   }	
+
+    #navbar{
+    	padding: 0 30px;
+  		border-bottom: 1px solid #eee;
+  		overflow: hidden;
+  		background-color: white;
+  		box-shadow: 0 1px 3px 0 rgba(0,0,0,0.50);
+  		height: 60px;
+  	
+    	}
+
+    #logo{
+    	float: left;
+    	line-height: 60px;
+    }
+
+    #logo img{
+    	width: 220px;
+    	vertical-align: middle;
+    }
+
+    #menu {
+    	float: right;
+   		margin: 0px;
+    	padding: 0px;
+    	line-height: 60px;
+    }	
+
+    #menu li{
+    	float: left;
+    	list-style: none;
+    	margin-right: 30px;
+
+    }
+
+    #menu li:last-child{
+    	margin-right: 0px;
+    }
+
+    #menu a{
+    	text-decoration: none;
+    	color: #545454;
+    	font-family: Helvetica;
+    	font-size: 13px;
+    	font-weight: bold;
+    	display: block;
+    }
+
+    #menu a:hover{
+    	background-color: #eeeeee;
+    }

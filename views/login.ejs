@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>로그인</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="login.css">
+  <link href="https://fonts.googleapis.com/earlyaccess/notosanskr.css" rel="stylesheet">
+</head>
+<body>
+
+    <%- include('navbar.ejs') %>
+    
+<div id="contain">
+  
+
+
+  <div class="login-form">
+    <form action="/auth/login" method="post">
+      <input type="text" name="email"  id = "email-input" class="text-field" placeholder="아이디"><br>
+      <input type="password" name="password" id = "password-input" class="text-field" placeholder="비밀번호"><br>
+      <input value="로그인" id ="button-input" class="submit-btn" type="submit"></input>
+    </form>
+
+    <div class="links">
+      <a href="/join">회원가입하러가기</a>
+    </div>
+
+  </div>
+
+</div>
+
+<script
+  src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  crossorigin="anonymous"></script>
+
+<script>
+
+//   $('#email-input').on('input',inputActive);
+//   $('#password-input').on('input',inputActive);
+
+
+//   function inputActive(){
+
+//     var email_input = $('#email-input').val();
+//     var password_input = $('#password-input').val();
+
+//     if(email_input == "" || password_input == ""){
+//       $('#button-input').css('background-color','#9b9b9b');
+//     }
+//     else{
+      
+//         $('#button-input').css('background-color', '#1bbc9b');
+//     }
+
+
+//   }
+
+
+</script>
+</body>
+</html>

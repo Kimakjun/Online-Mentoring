@@ -1,0 +1,124 @@
+* {
+    box-sizing: border-box;
+    font-family: 'Noto Sans KR', sans-serif;
+  }
+  
+  body {
+    margin: 0;
+    background-color: blanchedalmond;
+  }
+  
+  
+  #contain{
+    
+      height: 900px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+  }
+    /*수직 정렬 하는 또하나의 방법 flex 이용하기 !!*/
+   /* display: flex;
+    flex-direction: column; 
+    justify-content: center;*/
+  
+  
+  .login-form {
+  
+  
+      width: 300px;
+      background-color: gray;
+      border-radius: 5px;
+      padding: 20px;
+      margin-right: auto;
+      margin-left: auto;
+  
+    
+    
+  }
+  
+  .text-field {
+    font-size: 14px;
+    border: 0;
+    width: 100%;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    padding: 10px;
+  
+  
+  }
+  
+  .submit-btn {
+    font-size: 14px;
+    border: 0;
+    background-color: gold;
+    border-radius: 5px;
+    margin-bottom: 30px;
+    width: 100%;
+    padding: 10px;
+  }
+  
+  .submit-btn:hover{
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.50);
+  
+  }
+  
+  .links {
+    text-align: center;
+  }
+  
+  .links a {
+    font-size: 12px;
+    color:white;
+  }
+  
+  
+  #navbar{
+    padding: 0 30px;
+      border-bottom: 1px solid #eee;
+      overflow: hidden;
+      background-color: white;
+      box-shadow: 0 1px 3px 0 rgba(0,0,0,0.50);
+      height: 60px;
+  
+    }
+
+#logo{
+    float: left;
+    line-height: 60px;
+}
+
+#logo img{
+    width: 220px;
+    vertical-align: middle;
+}
+
+#menu {
+    float: right;
+    margin: 0px;
+    padding: 0px;
+    line-height: 60px;
+}	
+
+#menu li{
+    float: left;
+    list-style: none;
+    margin-right: 30px;
+
+}
+
+#menu li:last-child{
+    margin-right: 0px;
+}
+
+#menu a{
+    text-decoration: none;
+    color: #545454;
+    font-family: Helvetica;
+    font-size: 13px;
+    font-weight: bold;
+    display: block;
+}
+
+#menu a:hover{
+    background-color: #eeeeee;
+}
