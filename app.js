@@ -8,7 +8,7 @@ const passport = require('passport');
 require('dotenv').config();
 
 const bcrypt = require('bcrypt');
-const { sequelize, User } = require('./models');
+const { sequelize, User, Post } = require('./models');
 const passportConfig = require('./passport');
 
 const app = express();
@@ -42,12 +42,18 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
-app.get('/', (req, res, next) => {
-    res.render('main', {title : "test", user : req.user});
+app.get('/', async (req, res, next) => {
+    console.log('메인 라우터 입니다.')
+    const posts = await Post.findAll({
+      include : {model: User, attributes: ['id', 'nick']}
+    })
+    console.log(posts)
+    console.log(posts[1].user.nick)
+    res.render('main', {title : "test", user : req.user, posts});
 })
 
 app.get('/login', (req, res, next) => {
-    res.render('login',{title : "test", user : req.user} );
+    res.render('login',{title : "test", user : req.user, loginError: req.flash('loginError')} );
 })
 
 app.get('/join', (req, res, next) => {
@@ -83,8 +89,8 @@ app.post('/auth/login', (req, res, next) => {
         return next(authError);
       }
       if (!user) {
-        req.flash('loginError', info.message);
-        return res.redirect('/');
+        req.flash('loginError', info.msg);
+        return res.redirect('/login');
       }
       return req.login(user, (loginError) => {
         if (loginError) {
@@ -109,7 +115,16 @@ app.get('/post', (req, res, next) => {
 app.post('/post', async (req, res, next)=>{
     const {title, content, date, start, end} = req.body;
     try{
-        console.log(title, content, typeof(date), typeof(start), typeof(end));
+      console.log("userId : ",req.user.id);
+        const post = await Post.create({
+          title: req.body.title,
+          content: req.body.content,
+          day: req.body.date,
+          start: req.body.start,
+          end: req.body.end,
+          userId: req.user.id,
+        })
+        console.log('post 라우터 입니다.')
         res.redirect('/');
     }catch(error){
         console.error(error);

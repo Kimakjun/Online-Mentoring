@@ -9,9 +9,9 @@ module.exports = (passport) => {
     })
 
     passport.deserializeUser(async (id, done) => {
-
-        const curUser = await User.findOne({where : {id}});
-        done(null, curUser);
+        console.log(id);
+        const user = await User.findOne({where : {id}});
+        done(null, user);
 
     })
  
