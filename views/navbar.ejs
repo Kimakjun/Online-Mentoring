@@ -15,6 +15,7 @@
         <% if(user) { %>
         <li><a href="#">환영합니다! <%= user.nick %> 님</a></li>
         <li><a href="/auth/logout">Logout</a></li>
+        <input id="my-id" type="hidden" value=user.id>
         <% } else{ %>
         <li><a href="/login">Login</a></li>
         <% } %>

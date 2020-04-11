@@ -12,12 +12,15 @@ db.User = require('./user')(sequelize, Sequelize);
 db.Post = require('./post')(sequelize, Sequelize);
 db.Hashtag = require('./hashtag')(sequelize, Sequelize);
 
-db.User.hasMany(db.Post);
-db.Post.belongsTo(db.User);
+//db.User.hasMany(db.Post);
 
 
 db.Post.belongsToMany(db.Hashtag, { through: 'PostHashtag' });
 db.Hashtag.belongsToMany(db.Post, { through: 'PostHashtag' });
+
+
+db.Post.belongsTo(db.User, { as : 'writer'});
+db.Post.belongsTo(db.User, { as : 'applicant'});
 
 db.User.belongsToMany(db.User, {
   foreignKey: 'MentorId',

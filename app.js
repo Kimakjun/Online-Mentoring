@@ -10,20 +10,26 @@ require('dotenv').config();
 const bcrypt = require('bcrypt');
 const { sequelize, User, Post } = require('./models');
 const passportConfig = require('./passport');
-
+ 
 const app = express();
 sequelize.sync();
 passportConfig(passport);
-
-
-
+  
+const indexRouter = require('./routes/index');
+const authRouter = require('./routes/auth');
+const postRouter = require('./routes/post');
+  
+  
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.set('port', process.env.PORT || 8001);
+   
 
 
 app.use(morgan('dev'));
+app.use(express.static(path.join(__dirname, 'fonts')));
 app.use(express.static(path.join(__dirname, 'images')));
+app.use('/post', express.static(path.join(__dirname, 'images')));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -42,95 +48,10 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
-app.get('/', async (req, res, next) => {
-    console.log('메인 라우터 입니다.')
-    const posts = await Post.findAll({
-      include : {model: User, attributes: ['id', 'nick']}
-    })
-    console.log(posts)
-    console.log(posts[1].user.nick)
-    res.render('main', {title : "test", user : req.user, posts});
-})
+app.use('/', indexRouter);
+app.use('/post', postRouter);
+app.use('/auth', authRouter);
 
-app.get('/login', (req, res, next) => {
-    res.render('login',{title : "test", user : req.user, loginError: req.flash('loginError')} );
-})
-
-app.get('/join', (req, res, next) => {
-    res.render('join', {user : req.user,  joinError: req.flash('joinError') } );
-})
-
-app.post('/auth/join', async (req, res, next) => {
-    const { email, nick, password, info } = req.body;
-    try {
-      const exUser = await User.findOne({ where: { email } });
-      if (exUser) {
-        req.flash('joinError', '이미 가입된 이메일입니다.');
-        return res.redirect('/join');
-      }
-      const hash = await bcrypt.hash(password, 12);
-      await User.create({
-        email,
-        nick,
-        info,
-        password: hash,
-      });
-      return res.redirect('/login');
-    } catch (error) {
-      console.error(error);
-      return next(error);
-    }
-})
-
-app.post('/auth/login', (req, res, next) => {
-    passport.authenticate('local', (authError, user, info) => {
-      if (authError) {
-        console.error(authError);
-        return next(authError);
-      }
-      if (!user) {
-        req.flash('loginError', info.msg);
-        return res.redirect('/login');
-      }
-      return req.login(user, (loginError) => {
-        if (loginError) {
-          console.error(loginError);
-          return next(loginError);
-        }
-        return res.redirect('/');
-      });
-    })(req, res, next); // 미들웨어 내의 미들웨어에는 (req, res, next)를 붙입니다.
-  });
-
- app.get('/auth/logout', (req, res, next) => {
-     req.logout();
-     res.redirect('/');
- }) 
-
-app.get('/post', (req, res, next) => {
-    res.render('post',{title : "test", user : req.user} );
-
-})
-
-app.post('/post', async (req, res, next)=>{
-    const {title, content, date, start, end} = req.body;
-    try{
-      console.log("userId : ",req.user.id);
-        const post = await Post.create({
-          title: req.body.title,
-          content: req.body.content,
-          day: req.body.date,
-          start: req.body.start,
-          end: req.body.end,
-          userId: req.user.id,
-        })
-        console.log('post 라우터 입니다.')
-        res.redirect('/');
-    }catch(error){
-        console.error(error);
-        next(error);
-    }
-})
 
 app.use((req, res, next) => {
   const err = new Error('Not Found');
