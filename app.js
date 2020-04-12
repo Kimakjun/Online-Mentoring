@@ -18,7 +18,7 @@ passportConfig(passport);
 const indexRouter = require('./routes/index');
 const authRouter = require('./routes/auth');
 const postRouter = require('./routes/post');
-  
+const userRouter = require('./routes/user');  
   
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -51,7 +51,7 @@ app.use(passport.session());
 app.use('/', indexRouter);
 app.use('/post', postRouter);
 app.use('/auth', authRouter);
-
+app.use('/user', userRouter);
 
 app.use((req, res, next) => {
   const err = new Error('Not Found');

@@ -48,5 +48,25 @@ router.get('/:id',isLoggedIn, async (req, res, next) => {
     }
 })
 
+router.post('/:id/match', isLoggedIn, async(req, res, next) => {
+  
+  try{
+      const post = await Post.findOne({where: {id : req.params.id}});
+      if(post.writerId == req.user.id){
+        return res.status(403).send('본인이 올린공고에 신청하시게요 ? ')
+      }else if(post.applicantId){
+        return res.status(403).send('이미 매칭된 공고입니다.');
+      }
+      await Post.update({applicantId: req.user.id}, {where: {id: req.params.id}});
+      return res.send('Ok');
+
+  }catch(error){
+    console.log(error);
+    next(error);
+  }
+
+
+});
+
 
 module.exports = router;

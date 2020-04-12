@@ -19,22 +19,26 @@
     <p>멘토 : <%= post.writer.nick %></p>
     <input id="post-id" type="hidden" value="<%= post.id %>">
     <button id="apply">신청하기!</button>
+    <% if(post.applicantId){%>
+    <h1>완료된 공고입니다.</h1>
+        <% } %>
+        
 </body>
 
 
 <script>
 
     document.getElementById('apply').addEventListener('click', function (){
-       alert('신청하기 버튼입니다.'); 
+    //    alert('신청하기 버튼입니다.'); 
 
        const xhr = new XMLHttpRequest();
        const id =  document.querySelector('#post-id').value;
        xhr.onload = function() {
             if(xhr.status === 200){
-                const msg = JSON.parse(xhr.responseText);
-                alert(`${msg}`);
-            }else{
-                console.error(xhr.responseText);
+                alert(xhr.responseText);
+                
+            }else if(xhr.status === 403){
+                alert(xhr.responseText);
             }
        }
 
