@@ -10,46 +10,64 @@
 
     <%- include('navbar.ejs') %>
 
-    <h1>내가 멘토로.</h1>
+    <h1>매칭내역.</h1>
 
-    <% for(let i = 0; i < posts.length; i++) {%>
-        <div id="menu2" class="menu">
-            
-            <div class="comment">
-                <h1>제목 : <%= posts[i].title%></h1>
-                <h1>내용 : <%= posts[i].content%></h1>
-                <h1>날짜 : <%= posts[i].day%></h1>
-                <h1>시작 : <%= posts[i].start%></h1>
-                <h1>종료 : <%= posts[i].end%></h1>
-                <h2>멘티 : <%= posts[i].applicant.nick%></h2>
-                 
  
-                <!-- <input class="post-id" value= '<%= posts[i].id%>' type="hidden">
-                <button class="see-detail" onclick="location.href='/post/<%= posts[i].id%>'" >자세히 보기</button> -->
-            </div>
-        
-        </div>
+    <fieldset>
+        <legend>내강의</legend>
+        <table>
+            <thead>
+                <tr>
+                    <th>제목</th>
+                    <th>내용</th>
+                    <th>날짜</th>
+                    <th>시작</th>
+                    <th>종료</th>
+                    <th>멘티</th>
+                </tr>
+            </thead>
+    <% for(let i = 0; i < posts.length; i++) {%>
+
+            <tbody>
+                <td><%= posts[i].title%></td>
+                <td><%= posts[i].content%></td>
+                <td><%= posts[i].day%></td>
+                <td><%= posts[i].start%></td>
+                <td><%= posts[i].end%></td>
+                <td><%= posts[i].applicant.nick%></td>
+            </tbody>
+
         <% }%>
+      </table>
+    </fieldset>  
 
-        <h1>내가 멘티로.</h1>
+    <fieldset>
+        <legend>내수업</legend>
+        <table>
+            <thead>
+                <tr>
+                    <th>제목</th>
+                    <th>내용</th>
+                    <th>날짜</th>
+                    <th>시작</th>
+                    <th>종료</th>
+                    <th>멘티</th>
+                </tr>
+            </thead>
+    <% for(let i = 0; i < posts2.length; i++) {%>
 
-        <% for(let i = 0; i < posts2.length; i++) {%>
-            <div id="menu2" class="menu">
-                
-                <div class="comment">
-                    <h1>제목 : <%= posts2[i].title%></h1>
-                    <h1>내용 : <%= posts2[i].content%></h1>
-                    <h1>날짜 : <%= posts2[i].day%></h1>
-                    <h1>시작 : <%= posts2[i].start%></h1>
-                    <h1>종료 : <%= posts2[i].end%></h1>
-                    <h2>멘토 : <%= posts2[i].writer.nick%></h2>
-                     
-     
-                  
-                </div>
-            
-            </div>
-            <% }%>   
+            <tbody>
+                <td><%= posts2[i].title%></td>
+                <td><%= posts2[i].content%></td>
+                <td><%= posts2[i].day%></td>
+                <td><%= posts2[i].start%></td>
+                <td><%= posts2[i].end%></td>
+                <td><%= posts2[i].writer.nick%></td>
+            </tbody>
+
+        <% }%>
+      </table>
+    </fieldset>         
 
 </body>
 

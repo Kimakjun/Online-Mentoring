@@ -11,7 +11,8 @@ db.Sequelize = Sequelize;
 db.User = require('./user')(sequelize, Sequelize);
 db.Post = require('./post')(sequelize, Sequelize);
 db.Hashtag = require('./hashtag')(sequelize, Sequelize);
-
+db.Chat = require('./chat')(sequelize, Sequelize);
+db.ChatRoom = require('./chatroom')(sequelize, Sequelize);
 //db.User.hasMany(db.Post);
 
 
@@ -33,6 +34,21 @@ db.User.belongsToMany(db.User, {
   as: 'Mentors',
   through: 'Mentoring',
 });
+
+
+db.User.hasMany(db.Chat);
+db.Chat.belongsTo(db.User);
+
+db.ChatRoom.hasMany(db.Chat);
+db.Chat.belongsTo(db.ChatRoom);
+
+
+
+
+//   관계 
+//   user(1) => chat(N)  
+//   room(1) => user(N)
+//   room(1) => chat(N)
 
 
 module.exports = db;
