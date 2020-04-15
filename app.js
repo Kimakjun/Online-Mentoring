@@ -5,6 +5,8 @@ const path = require('path');
 const session = require('express-session');
 const flash = require('connect-flash');
 const passport = require('passport');
+const webSocket = require('./socket');
+
 require('dotenv').config();
 
 const bcrypt = require('bcrypt');
@@ -14,11 +16,24 @@ const passportConfig = require('./passport');
 const app = express();
 sequelize.sync();
 passportConfig(passport);
-  
+
+
+const sessionMiddleware = session({
+  resave: false,
+  saveUninitialized: false,
+  secret: process.env.COOKIE_SECRET,
+  cookie: {
+    httpOnly: true,
+    secure: false,
+  },
+})
+
 const indexRouter = require('./routes/index');
 const authRouter = require('./routes/auth');
 const postRouter = require('./routes/post');
 const userRouter = require('./routes/user');  
+const roomRouter = require('./routes/room');
+
   
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -30,19 +45,12 @@ app.use(morgan('dev'));
 app.use(express.static(path.join(__dirname, 'fonts')));
 app.use(express.static(path.join(__dirname, 'images')));
 app.use('/post', express.static(path.join(__dirname, 'images')));
+app.use('/room', express.static(path.join(__dirname, 'images')));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser(process.env.COOKIE_SECRET));
-app.use(session({
-  resave: false,
-  saveUninitialized: false,
-  secret: process.env.COOKIE_SECRET,
-  cookie: {
-    httpOnly: true,
-    secure: false,
-  },
-}));
+app.use(sessionMiddleware);
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
@@ -52,6 +60,8 @@ app.use('/', indexRouter);
 app.use('/post', postRouter);
 app.use('/auth', authRouter);
 app.use('/user', userRouter);
+app.use('/room', roomRouter);
+
 
 app.use((req, res, next) => {
   const err = new Error('Not Found');
@@ -66,9 +76,10 @@ app.use((err, req, res, next) => {
   res.render('error');
 });
 
-app.listen(app.get('port'), () => {
+const server = app.listen(app.get('port'), () => {
   console.log(app.get('port'), '번 포트에서 대기중');
 });
 
+webSocket(server, app, sessionMiddleware);
 
 

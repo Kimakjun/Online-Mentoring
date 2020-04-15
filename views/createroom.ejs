@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/main.css" rel="stylesheet"/>
+    <title>Document</title>
+</head>
+<body>
+    <%- include('navbar.ejs') %>
+
+    <fieldset>
+        <legend>채팅방생성</legend>
+        <form action = '/room' method="post">
+            <div>
+                <input name='title' placeholder="방 제목">
+            </div>            
+            <div>
+                <input name='max' type="number" placeholder="수용 인원">
+            </div>  
+            <div>
+                <input name='password' type="password" placeholder="비밀번호(필수아님)">
+            </div>
+            <div>
+                <button type="submit">생성</button>
+            </div>  
+        </form>
+    </fieldset>
+</body>
+</html>

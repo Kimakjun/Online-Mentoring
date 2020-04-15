@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/main.css" rel="stylesheet"/>
+    <title><%= title %></title>
+</head>
+<body>
+    <%- include('navbar.ejs') %>
+
+    <h1> 채팅방 목록 화면 입니다.</h1>
+         
+   
+    <fieldset>
+        <legend>대기방</legend>
+        <table>
+            <thead>
+                <tr>
+                    <th>제목</th>
+                    <th>타입</th>
+                    <th>허용인원</th>
+                    <th>방장</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <% for(let i = 0; i < rooms.length; i++) {%>  
+              <tr data-id="<%=rooms[i].id%>">
+                <td><%= rooms[i].title%></td>
+                <%const type = rooms[i].password ? '비밀방' : '공개방'%>
+                <td><%= type%></td>
+                <td><%= rooms[i].max%></td>
+                <td><%= rooms[i].onwer%></td>
+                <%const password = rooms[i].password ? 'true' : 'false'%>
+                <td>
+                    <button data-id="<%= rooms[i].id%>" data-password = "<%= password%>">입장</button>
+                </td> 
+            </tr>
+              <% }%>
+            </tbody>
+
+      
+      </table>
+    </fieldset>  
+
+    
+   
+        <a href="/room/create"><button>방만들기</button></a>
+    
+</body>
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+
+    var socket = io.connect('http://localhost:8001/room',{
+        path: '/socket.io'
+    });
+
+    socket.on('newRoom', function (data) {
+        console.log('새로운 방이 생성 됬습니다');
+     
+      var tr = document.createElement('tr');
+      var td = document.createElement('td');
+      td.textContent = data.title;
+      tr.appendChild(td);
+      td = document.createElement('td');
+      td.textContent = data.password ? '비밀방' : '공개방';
+      tr.appendChild(td);
+      td = document.createElement('td');
+      td.textContent = data.max;
+      tr.appendChild(td);
+      td = document.createElement('td');
+      td.textContent = data.onwer;
+      tr.appendChild(td);
+      td = document.createElement('td');
+      var button = document.createElement('button');
+      button.textContent = '입장';
+      button.dataset.password = data.password ? 'true' : 'false';
+      button.dataset.id = data.id;
+      button.addEventListener('click', addBtnEvent);
+      td.appendChild(button);
+      tr.appendChild(td);
+      tr.dataset.id = data.id;
+      document.querySelector('table tbody').appendChild(tr);
+    });
+
+
+
+</script>
+
+</html>
