@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/chat.css" rel="stylesheet"/>
+    <title>Document</title>
+</head>
+<body>
+
+    <%- include('navbar.ejs') %>
+    <h1><%= title%></h1>
+    <input id="chat-room" type="hidden" value="<%= room.id %>">
+    <input id="chat-user" type="hidden" value="<%= user.id %>">
+        <fieldset>
+            <legend>채팅 내용</legend>
+            <div id="chat-list">
+                <% for(let i = 0; i < chats.length; i++) {
+                    if(chats[i].user === user){%>
+                        <div class="mine">
+                            <div><%= chats[i].user.nick %></div>
+                            <div><%= chats[i].chat %></div>
+                        </div>
+                    <% }else if(chats[i].user === 'system'){ %>
+                        <div class="system">
+                            <div><%= chats[i].chat%></div>
+                        </div>
+                    <%}else{ %>
+                        <div class="other">
+                            <div><%= chats[i].user.nick%></div>
+                            <div><%= chats[i].chat%></div>
+                        </div>
+                    <%}%>  
+                <% } %>
+            </div>
+        </fieldset>
+        <form id="chat-form" action="/chat" method="post" enctype="multipart/form-data">
+            <input id="chat" name="chat">
+            <button type="submit">전송</button>
+        </form>
+
+</body>
+</html>   
+
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+
+    const socket = io.connect('http://localhost:8001/chat', {
+        path: '/socket.io'
+    });
+    socket.on('join', function (data) {
+      var div = document.createElement('div');
+      div.classList.add('system');
+      var chat = document.createElement('div');
+      div.textContent = data.chat;
+      div.appendChild(chat);
+      document.querySelector('#chat-list').appendChild(div);
+    });
+    socket.on('exit', function (data) {
+      var div = document.createElement('div');
+      div.classList.add('system');
+      var chat = document.createElement('div');
+      div.textContent = data.chat;
+      div.appendChild(chat);
+      document.querySelector('#chat-list').appendChild(div);
+    });
+    socket.on('chat', function (data) {
+        const userId = document.querySelector('#chat-user').value;
+        alert(`데이터 도착 ${userId} sd`);
+      console.log('데이터는 도착했다는')
+      console.log(data.userId, 'ㅁㄴㅇㅁㄴㅇ');
+      console.log()
+      var div = document.createElement('div');
+      if (data.userId === userId) {
+        div.classList.add('mine');
+      } else {
+        div.classList.add('other');
+      }
+      var name = document.createElement('div');
+      name.textContent = data.user.nick;
+      div.appendChild(name);
+      if (data.chat) {
+        var chat = document.createElement('div');
+        chat.textContent = data.chat;
+        div.appendChild(chat);
+    } 
+    //   div.style.color = data.user;
+      document.querySelector('#chat-list').appendChild(div);
+    });
+
+    document.querySelector('#chat-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const roomId = document.querySelector('#chat-room').value;
+      console.log(roomId);
+      if (e.target.chat.value) {
+        var xhr = new XMLHttpRequest();
+        xhr.onload = function () {
+          if (xhr.status === 200) {
+            e.target.chat.value = '';
+          } else {
+            console.error(xhr.responseText);
+          }
+        };
+        xhr.open('POST', '/room/' + roomId + '/chat');
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.send(JSON.stringify({ chat: this.chat.value }));
+      }
+    });
+
+
+
+</script>

@@ -1,0 +1,84 @@
+* { box-sizing: border-box; }
+.mine { text-align: right; }
+.system { text-align: center; }
+.mine img, .other img {
+  max-width: 300px;
+  display: inline-block;
+  border: 1px solid silver;
+  border-radius: 5px;
+  padding: 2px 5px;
+}
+.mine div:first-child, .other div:first-child { font-size: 12px; }
+.mine div:last-child, .other div:last-child {
+  display: inline-block;
+  border: 1px solid silver;
+  border-radius: 5px;
+  padding: 2px 5px;
+  max-width: 300px;
+}
+#exit-btn { position: absolute; top: 20px; right: 20px; }
+#chat-list { height: 500px; overflow: auto; padding: 5px; }
+#chat-form { text-align: right; }
+label[for='gif'], #chat, #chat-form [type='submit'] {
+  display: inline-block;
+  height: 30px;
+  vertical-align: top;
+}
+label[for='gif'] { cursor: pointer; padding: 5px; }
+#gif { display: none; }
+table, table th, table td {
+  text-align: center;
+  border: 1px solid silver;
+  border-collapse: collapse;
+}
+
+#navbar{
+    padding: 0 30px;
+      border-bottom: 1px solid #eee;
+      overflow: hidden;
+      background-color: white;
+      box-shadow: 0 1px 3px 0 rgba(0,0,0,0.50);
+      height: 60px;
+  
+    }
+
+#logo{
+    float: left;
+    line-height: 60px;
+}
+
+#logo img{
+    width: 220px;
+    vertical-align: middle;
+}
+
+#menu {
+    float: right;
+       margin: 0px;
+    padding: 0px;
+    line-height: 60px;
+}	
+
+#menu li{
+    float: left;
+    list-style: none;
+    margin-right: 30px;
+
+}
+
+#menu li:last-child{
+    margin-right: 0px;
+}
+
+#menu a{
+    text-decoration: none;
+    color: #545454;
+    font-family: Helvetica;
+    font-size: 13px;
+    font-weight: bold;
+    display: block;
+}
+
+#menu a:hover{
+    background-color: #eeeeee;
+}
