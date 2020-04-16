@@ -13,9 +13,10 @@ router.get('/', isLoggedIn, async (req, res, next) => {
          console.log(rooms);
          res.render('room', {title : "test", user : req.user, rooms});
          
-    }
+    } 
 
     catch(error){
+        
         console.error(error);
         next(error);
     
