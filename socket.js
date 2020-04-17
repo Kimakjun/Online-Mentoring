@@ -32,7 +32,7 @@ module.exports = (server, app, sessionMiddleware) => {
         
         socket.to(roomId).emit('join', {
             user: 'system',
-            chat: `새로운 님이 입장하셨습니다.`,
+            chat: `${req.session.nick} 님이 입장하셨습니다.`,
         })
 
         socket.on('disconnect', () => {
@@ -40,8 +40,9 @@ module.exports = (server, app, sessionMiddleware) => {
             socket.leave(roomId);
             const currentRoom = socket.adapter.rooms[roomId];
             const userCount = currentRoom ? currentRoom.length : 0;
+            console.log(userCount);
             if(userCount == 0){
-                axios.delete(`http://localhost:8005/room/${roomId}`)
+                axios.delete(`http://localhost:8001/room/${roomId}`)
                     .then(() => {
                         console.log('방제거 요청 성공');
                     })
@@ -51,7 +52,7 @@ module.exports = (server, app, sessionMiddleware) => {
             }else{
                 socket.to(roomId).emit('exit', {
                     user: 'system',
-                    chat: `${req.user.nick}님이 퇴장하셨습니다.`,
+                    chat: `${req.session.nick}님이 퇴장하셨습니다.`,
                 })
             }
         })

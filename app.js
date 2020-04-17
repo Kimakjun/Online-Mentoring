@@ -55,6 +55,16 @@ app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use((req, res, next) => {
+
+
+   if(!req.session.nick && req.user){
+     req.session.nick = req.user.nick;     
+     console.log(req.session.nick);
+   }
+   
+  next();
+})
 
 app.use('/', indexRouter);
 app.use('/post', postRouter);

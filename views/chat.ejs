@@ -13,6 +13,7 @@
     <input id="chat-room" type="hidden" value="<%= room.id %>">
     <input id="chat-user" type="hidden" value="<%= user.id %>">
         <fieldset>
+            <a href="/room" id="exit-btn">나가기</a>
             <legend>채팅 내용</legend>
             <div id="chat-list">
                 <% for(let i = 0; i < chats.length; i++) {
@@ -67,15 +68,17 @@
     });
     socket.on('chat', function (data) {
         const userId = document.querySelector('#chat-user').value;
-        alert(`데이터 도착 ${userId} sd`);
-      console.log('데이터는 도착했다는')
-      console.log(data.userId, 'ㅁㄴㅇㅁㄴㅇ');
+      //   alert(`데이터 도착 ${userId}  ${data.userId}sd`);
+      // console.log('데이터는 도착했다는')
+      console.log(typeof(data.userId), typeof(userId));
       console.log()
       var div = document.createElement('div');
-      if (data.userId === userId) {
+      if (data.userId === parseInt(userId, 10)) {
+        console.log('mine')
         div.classList.add('mine');
       } else {
         div.classList.add('other');
+        console.log('other')
       }
       var name = document.createElement('div');
       name.textContent = data.user.nick;

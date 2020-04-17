@@ -85,6 +85,14 @@
       document.querySelector('table tbody').appendChild(tr);
     });
 
+    socket.on('removeRoom', function (data) {
+        console.log('test');
+        document.querySelectorAll('tbody tr').forEach(function(tr){
+            if(tr.dataset.id === data){
+                tr.parentNode.removeChild(tr);
+            }
+        })
+    })
     function addBtnEvent(e) {
         if(e.target.dataset.password === 'true'){
             const password = prompt('비밀번호를 입력하세요');

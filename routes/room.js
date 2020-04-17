@@ -95,6 +95,23 @@ router.get('/:id', async (req, res, next) => {
 
 })
 
+router.delete('/:id', async (req, res, next) => {
+    try{
+        await Chat.destroy({where : {chatroomId: req.params.id}});
+        await ChatRoom.destroy({where: {id : req.params.id}});
+
+        //setTimeout 사용하는 이유 ? ? 
+        res.send('OK');
+
+        setTimeout(() => {
+            req.app.get('io').of('/room').emit('removeRoom', req.params.id);            
+        }, 2000)
+    }catch(error){
+        console.log(error);
+        next(error);
+    }
+})
+
 router.post('/:id/chat', async (req, res, next) => {
     try{
         console.log('요청 도착', req.user);
