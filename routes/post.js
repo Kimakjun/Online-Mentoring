@@ -1,5 +1,5 @@
 const express = require('express');
-
+const schedule = require('node-schedule');
 const {User, Post} = require('../models');
 const {isLoggedIn} = require('./middlewares');
 
@@ -21,7 +21,27 @@ router.post('/', async (req, res, next)=>{
           writerId: req.user.id,
         })
         console.log('post 라우터 입니다.')
+     
+        // 공고 시간 마감후 매칭되지않으면 공고 삭제
+        const intervalTime = parseFloat(req.body.end) - parseFloat(req.body.start);
+        const endTime = new Date();
+        endTime.setMinutes(endTime.getMinutes() + 1);
+
+        schedule.scheduleJob(endTime, async () => {
+          const matched = await Post.findOne({
+            where : {id: post.id, applicantId : null},
+          })
+
+          if(matched){
+             await Post.destroy({where: {id: matched.id}});
+          }
+
+
+        })
+       
         res.redirect('/');
+
+
     }catch(error){
         console.error(error);
         next(error);

@@ -35,9 +35,10 @@ router.post('/', async(req, res, next) => {
     const {title, max, password} = req.body;
     try{
         //test 
+       const maxNum = max === '' ? 10 : max;
        const newRoom =  await ChatRoom.create({
             title,
-            max,
+            maxNum,
             password,
             onwer: req.user.nick,
         })

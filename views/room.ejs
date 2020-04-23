@@ -9,12 +9,12 @@
 <body>
     <%- include('navbar.ejs') %>
 
-    <h1> 채팅방 목록 화면 입니다.</h1>
+    <h1 style="text-align: center;"> 채팅방 목록 화면 입니다.</h1>
          
    
-    <fieldset>
+    <fieldset id = "container">
         <legend>대기방</legend>
-        <table>
+        <table id="table">
             <thead>
                 <tr>
                     <th>제목</th>
@@ -45,8 +45,10 @@
     </fieldset>  
 
     
-   
-        <a href="/room/create"><button>방만들기</button></a>
+    <div id="create-room-bottom">
+        <a  href="/room/create"><button id ="create-room">방만들기</button></a>
+    </div>
+       
     
 </body>
 

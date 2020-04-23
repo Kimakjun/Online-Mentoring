@@ -12,8 +12,13 @@
     <h1><%= title%></h1>
     <input id="chat-room" type="hidden" value="<%= room.id %>">
     <input id="chat-user" type="hidden" value="<%= user.id %>">
-        <fieldset>
-            <a href="/room" id="exit-btn">나가기</a>
+      
+    <div id = "exit">
+      <a href="/room" id="exit-btn">나가기</a> 
+    </div>
+  
+      
+      <fieldset>     
             <legend>채팅 내용</legend>
             <div id="chat-list">
                 <% for(let i = 0; i < chats.length; i++) {
@@ -35,11 +40,12 @@
                 <% } %>
             </div>
         </fieldset>
+        <div id ="bottom">
         <form id="chat-form" action="/chat" method="post" enctype="multipart/form-data">
             <input id="chat" name="chat">
             <button type="submit">전송</button>
         </form>
-
+      </div>
 </body>
 </html>   
 

@@ -2,34 +2,86 @@
 .mine { text-align: right; }
 .system { text-align: center; }
 .mine img, .other img {
-  max-width: 300px;
-  display: inline-block;
-  border: 1px solid silver;
-  border-radius: 5px;
-  padding: 2px 5px;
+max-width: 300px;
+display: inline-block;
+border: 1px solid silver;
+border-radius: 5px;
+padding: 2px 5px;
 }
-.mine div:first-child, .other div:first-child { font-size: 12px; }
+.mine div:first-child, .other div:first-child {
+font-size: 15px; 
+margin-bottom: 3px;
+}
 .mine div:last-child, .other div:last-child {
-  display: inline-block;
-  border: 1px solid silver;
-  border-radius: 5px;
-  padding: 2px 5px;
-  max-width: 300px;
+display: inline-block;
+border: 0;
+border-radius: 5px;
+padding: 2px 5px;
+max-width: 300px;
 }
-#exit-btn { position: absolute; top: 100px; right: 20px; }
+
+.other div:last-child {
+background-color: #ffffff;
+}
+
+.mine div:last-child{
+background-color: #fef01b;
+}
+
+body{
+
+}
+fieldset {
+border-radius: 5px;
+border-color: gray;
+background-color: #9bbbd4;
+}
+#exit {
+text-align: right;
+}
+#exit-btn { text-align: right;
+text-decoration: none;
+color:black;
+border: 1px solid black;
+border-radius: 3px;
+font-weight: bold;
+}
+#exit-btn:hover {
+background-color: red;
+}
 #chat-list { height: 500px; overflow: auto; padding: 5px; }
-#chat-form { text-align: right; }
+#chat-form { text-align: right;
+}
+#chat {
+border-radius: 5px;
+border: 0;
+width: 30%;
+}
+button{
+border-radius: 5px;
+border: 0;
+}
+#bottom{
+font-size: 14px;
+border: 0;
+background-color: gold;
+border-radius: 5px;
+margin-bottom: 50px;
+margin-top: 20px;
+width: 100%;
+padding: 10px;
+}
 label[for='gif'], #chat, #chat-form [type='submit'] {
-  display: inline-block;
-  height: 30px;
-  vertical-align: top;
+display: inline-block;
+height: 30px;
+vertical-align: top;
 }
 label[for='gif'] { cursor: pointer; padding: 5px; }
 #gif { display: none; }
 table, table th, table td {
-  text-align: center;
-  border: 1px solid silver;
-  border-collapse: collapse;
+text-align: center;
+border: 1px solid silver;
+border-collapse: collapse;
 }
 
 #navbar{
