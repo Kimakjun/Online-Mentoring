@@ -28,6 +28,7 @@ const sessionMiddleware = session({
   },
 })
 
+const test;
 const indexRouter = require('./routes/index');
 const authRouter = require('./routes/auth');
 const postRouter = require('./routes/post');
@@ -39,6 +40,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.set('port', process.env.PORT || 8001);
    
+
 
 
 app.use(morgan('dev'));
