@@ -18,6 +18,7 @@ sequelize.sync();
 passportConfig(passport);
 
 
+
 const sessionMiddleware = session({
   resave: false,
   saveUninitialized: false,
@@ -28,7 +29,7 @@ const sessionMiddleware = session({
   },
 })
 
-const test;
+
 const indexRouter = require('./routes/index');
 const authRouter = require('./routes/auth');
 const postRouter = require('./routes/post');
@@ -57,6 +58,9 @@ app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 
+
+
+
 app.use((req, res, next) => {
 
 
@@ -67,6 +71,10 @@ app.use((req, res, next) => {
    
   next();
 })
+
+
+
+
 
 app.use('/', indexRouter);
 app.use('/post', postRouter);

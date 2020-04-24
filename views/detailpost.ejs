@@ -3,26 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="/main.css" rel="stylesheet"/>
+    <link href="/join.css" rel="stylesheet"/>
     <title>Document</title>
 </head>
 <body>
 
     <%- include('navbar.ejs') %>
 
-    <h1 style="text-align: center;">공고 확인 및 신청 페이지 입니다.</h1>
-    <h1>공고 제목 : <%= post.title %></h1>
-    <h2>공고 내용 : <%= post.content %></h2>
-    <h2>멘토일 일자 : <%= post.day %></h2>
-    <h2>시작시간  : <%= post.start %></h2>
-    <h2>종료 시간 : <%= post.end %></h2>
-    <p>멘토 : <%= post.writer.nick %></p>
-    <input id="post-id" type="hidden" value="<%= post.id %>">
-    <button id="apply">신청하기!</button>
-    <% if(post.applicantId){%>
-    <h1>완료된 공고입니다.</h1>
-        <% } %>
-        
+    <div id = "contain">
+        <div class="login-form" style="background-color:white; width: 40%;">
+            <h1 style="text-align: center;" class="text-field" >공고 확인 및 신청 페이지 입니다.</h1>
+            <h1 class="text-field">공고 제목 : <%= post.title %></h1>
+            <h2 class="text-field">공고 내용 : <%= post.content %></h2>
+            <h2 class="text-field">멘토일 일자 : <%= post.day %></h2>
+            <h2 class="text-field">시작시간  : <%= post.start %></h2>
+            <h2 class="text-field">종료 시간 : <%= post.end %></h2>
+            <p class="text-field">멘토 : <%= post.writer.nick %></p>
+            <input id="post-id" type="hidden" value="<%= post.id %>">
+           <div style="text-align: center;">
+            <button id="apply" style="border-radius: 3px; cursor: pointer; color: tomato;">신청하기!</button>
+            </div>
+            <% if(post.applicantId){%>
+            <h1>완료된 공고입니다.</h1>
+                <% } %>
+
+        </div>
+    
+
+      
+            
 </body>
 
 

@@ -9,12 +9,14 @@
 <body>
     <%- include('navbar.ejs') %>
     
-    <div class="main_header">
+    <!-- <div class="main_header">
         <h1>서비스 준비중입니다...</h1>
         <h2>-공고 조회 기능 구현-</h2>
-    </div>
+    </div> -->
 
-    <div class="container"></div>
+    <div id = "hero_header"></div>
+
+    <div class="container">
 
     <% for(let i = 0; i < posts.length; i++) {%>
         <div id="menu2" class="menu">
@@ -27,14 +29,16 @@
                   console.log(postId)
                 %>
                 <input class="post-id" value= '<%= posts[i].id%>' type="hidden">
+               <div style="text-align: center;">
                 <button class="see-detail" onclick="location.href='/post/<%= posts[i].id%>'" >자세히 보기</button>
+               </div>
             </div>
         
         </div>
         <% }%>
 
         <div class="clearfix"></div>
-
+    </div>
        
 
 </div>

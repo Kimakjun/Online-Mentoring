@@ -23,6 +23,7 @@
     	vertical-align: middle;
     }
 
+
     #menu {
     	float: right;
    		margin: 0px;
@@ -81,11 +82,23 @@
 		margin-bottom: 75px;
 	
 	}
+
+	  	
+	#hero_header{
+	   position: relative;
+	   height: 400px;
+	   background-image: url(hero_image.jpg);
+	   background-size: cover;
+	   background-position: center center;
+	   margin-bottom: 30px;	
+	}
+
 	
 	.menu{
 		margin-right: auto;
 		margin-left: auto; 
 		width: 300px;
+		height: 200px;
 		background-color: white;
 		border-radius: 10px;
 		overflow: hidden;
@@ -108,6 +121,7 @@
 	}
 	
 	.comment h1{
+		height: 50px;
 		font-size: 20px;
 		text-align: center;
 		margin: 0;
@@ -117,21 +131,22 @@
 		font-size: 16px;
 		text-align: left;
 		margin: 0;
-		margin-bottom: 16px;
+		margin-bottom: 20px;
 	}
 	
-	.comment a{
-		display: block;
-		text-align: center;
+	.comment .see-detail{
+		
+		
+		cursor: pointer;
 		font-size: 16px;
-		text-decoration: none;
 		color: #0000ee;
+		border-radius: 3px;
 	}
 	
 	
 	.container{
 		
-		width: 660px;
+		width: 1000px;
 		margin-left: auto;
 		margin-right: auto;
 		border-radius: 5px;

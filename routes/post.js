@@ -21,19 +21,35 @@ router.post('/', async (req, res, next)=>{
           writerId: req.user.id,
         })
         console.log('post 라우터 입니다.')
-     
-        // 공고 시간 마감후 매칭되지않으면 공고 삭제
-        const intervalTime = parseFloat(req.body.end) - parseFloat(req.body.start);
-        const endTime = new Date();
-        endTime.setMinutes(endTime.getMinutes() + 1);
+        
+        const cur = new Date();
+        const date = post.day.split("-");
+        const minutes = post.start.split(":");
+        console.log(date[0], date[1], date[2]);
+        
+        console.log(post.start)
 
-        schedule.scheduleJob(endTime, async () => {
-          const matched = await Post.findOne({
-            where : {id: post.id, applicantId : null},
-          })
+        const Month = parseInt(date[1]);
+        const day = parseInt(date[2]);
+        const time = parseFloat(post.start);
+        const minute = parseInt(minutes[1]);
 
-          if(matched){
-             await Post.destroy({where: {id: matched.id}});
+        cur.setMonth(Month);
+        cur.setDate(day);
+        cur.setHours(time);
+        cur.setMinutes(minute);
+
+        console.log(cur.getMonth(), cur.getDate(), cur.getHours(), cur.getMinutes());
+
+        schedule.scheduleJob(cur, async () => {
+          console.log('스케쥴링 작업이 시작합니다.');
+         
+          // const matched = await Post.findOne({
+          //   where : {id: post.id, applicantId : null},
+          // })
+          // console.log(matched);
+          if(post.applicantId == null){
+             await Post.destroy({where: {id: post.id}});
           }
 
 
@@ -79,6 +95,8 @@ router.post('/:id/match', isLoggedIn, async(req, res, next) => {
       }
       await Post.update({applicantId: req.user.id}, {where: {id: req.params.id}});
       return res.send('Ok');
+
+      schedule
 
   }catch(error){
     console.log(error);

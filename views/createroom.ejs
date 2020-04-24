@@ -3,28 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="/main.css" rel="stylesheet"/>
+    <link href="/join.css" rel="stylesheet"/>
     <title>Document</title>
 </head>
 <body>
     <%- include('navbar.ejs') %>
-
-    <fieldset>
-        <legend>채팅방생성</legend>
-        <form action = '/room' method="post">
-            <div>
-                <input name='title' placeholder="방 제목">
-            </div>            
-            <div>
-                <input name='max' type="number" placeholder="수용 인원">
-            </div>  
-            <div>
-                <input name='password' type="password" placeholder="비밀번호(필수아님)">
-            </div>
-            <div>
-                <button type="submit">생성</button>
-            </div>  
-        </form>
-    </fieldset>
+    <div id="contain">
+        <div class="login-form" style="width: 60%;" >
+         <p id="header">채팅방 생성 페이지</p>
+         <form action="/room" method="post">
+           <input type="text" name="title"  id = "title-input" class="text-field" placeholder=" 방 제목" required><br>
+           <input type="number" name="max" id = "number-input" class="text-field" placeholder="수용 인원" required><br>
+           <input type="password" name = "password" placeholder="비밀번호(필수아님)" class="text-field"><br>
+          <div style="text-align: center; margin-top: 10px;"> <input value="생성" id ="button-input" class="submit-btn" type="submit" style="width: 50%;"></input></div>
+         </form>
+         </div>
+       </div>
+    
 </body>
 </html>

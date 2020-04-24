@@ -3,22 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="/main.css" rel="stylesheet"/>
+    <link href="/join.css" rel="stylesheet"/>
     <title>Document</title>
 </head>
 <body>
     <%- include('navbar.ejs') %>
-   <p> 공고 등록 페이지 입니다. </p>
-   <div class="login-form">
+   <div id="contain">
+   <div class="login-form" style="width: 60%;" >
+    <p id="header">공고 등록 페이지 입니다. </p>
     <form action="/post" method="post">
       <input type="text" name="title"  id = "title-input" class="text-field" placeholder="제목" required><br>
       <input type="text" name="content" id = "content-input" class="text-field" placeholder="내용" required><br>
-      멘토링 날짜: <input type="date" name = "date" min="2020-04-19" max="2020-12-25"><br>
-      시작 시간<input type="time" name="start"><br>
-      종료 시간<input type="time" name ="end"><br>  
-      <input value="등록하기" id ="button-input" class="submit-btn" type="submit"></input>
-      
+      멘토링 날짜: <input type="date" name = "date" min="2020-04-19" max="2020-12-25" class="text-field"><br>
+      시작 시간<input type="time" name="start" class="text-field"><br>
+      종료 시간<input type="time" name ="end" class="text-field"><br>  
+     <div style="text-align: center; margin-top: 10px;"> <input value="등록하기" id ="button-input" class="submit-btn" type="submit" style="width: 50%;"></input></div>
     </form>
+    </div>
+  </div>
 </body>
 
 <script>
