@@ -29,7 +29,7 @@ router.post('/', async (req, res, next)=>{
         
         console.log(post.start)
 
-        const Month = parseInt(date[1]);
+        const Month = parseInt(date[1]) - 1;
         const day = parseInt(date[2]);
         const time = parseFloat(post.start);
         const minute = parseInt(minutes[1]);
@@ -43,16 +43,9 @@ router.post('/', async (req, res, next)=>{
 
         schedule.scheduleJob(cur, async () => {
           console.log('스케쥴링 작업이 시작합니다.');
-         
-          // const matched = await Post.findOne({
-          //   where : {id: post.id, applicantId : null},
-          // })
-          // console.log(matched);
           if(post.applicantId == null){
              await Post.destroy({where: {id: post.id}});
           }
-
-
         })
        
         res.redirect('/');
@@ -62,6 +55,19 @@ router.post('/', async (req, res, next)=>{
         console.error(error);
         next(error);
     }
+})
+
+router.delete('/:id', isLoggedIn, async (req, res, next) => {
+
+    try{
+      console.log(req.params.id, '번 공고의 삭제요청!');
+      await Post.destroy({where : {id : req.params.id, writerId: req.user.id}});
+      return res.send('OK');  
+    }catch(error){
+      console.error(error);
+      next(error);
+    }
+
 })
 
 
@@ -96,7 +102,7 @@ router.post('/:id/match', isLoggedIn, async(req, res, next) => {
       await Post.update({applicantId: req.user.id}, {where: {id: req.params.id}});
       return res.send('Ok');
 
-      schedule
+     
 
   }catch(error){
     console.log(error);

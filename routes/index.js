@@ -11,7 +11,9 @@ const router = express.Router();
 router.get('/', async (req, res, next) => {
     console.log('메인 라우터 입니다.')
     const posts = await Post.findAll({
-      include : {
+        where :{ applicantId : null},
+
+        include : {
          model: User,
          as : 'writer',
          attributes: ['id', 'nick']}

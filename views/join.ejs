@@ -13,10 +13,10 @@
     <div class="login-form">
         <p id ="header"> 회원 가입</p>
         <form action="/auth/join" method="post">
-          <input type="email" name="email"  id = "email-input" class="text-field" placeholder="이메일"><br>
-          <input type="password" name="password" id = "password-input" class="text-field" placeholder="비밀번호"><br>
-          <input type="text" name="nick" id = "nick-input" class="text-field" placeholder="닉네임"><br>
-          <textarea  name="info" id = "info-input" class="text-field" placeholder="관심분야를 #로 입력해주세요."></textarea>
+          <input type="email" name="email"  id = "email-input" class="text-field" placeholder="이메일" required><br>
+          <input type="password" name="password" id = "password-input" class="text-field" placeholder="비밀번호" required><br>
+          <input type="text" name="nick" id = "nick-input" class="text-field" placeholder="닉네임" required><br>
+          <textarea  name="info" id = "info-input" class="text-field" placeholder="관심분야를 #로 입력해주세요." required></textarea>
           <input value="회원가입하기" id ="button-input" class="submit-btn" type="submit" ></input>
         <% if (joinError){%>
             <div class="error-msg"><%= joinError%></div>

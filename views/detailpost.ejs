@@ -22,7 +22,10 @@
             <input id="post-id" type="hidden" value="<%= post.id %>">
            <div style="text-align: center;">
             <button id="apply" style="border-radius: 3px; cursor: pointer; color: tomato;">신청하기!</button>
-            </div>
+            <% if(post.writerId === user.id){ %>
+            <button id="delete" style="border-radius: 3px; cursor: pointer; color: red;">삭제하기!</button>            
+            <% } %>
+        </div>
             <% if(post.applicantId){%>
             <h1>완료된 공고입니다.</h1>
                 <% } %>
@@ -56,6 +59,26 @@
 
     })
 
+
+    document.getElementById('delete').addEventListener('click', function() {
+
+   
+        if(confirm('정말로 삭제하시겠습니까 ? ')){
+            const xhr = new XMLHttpRequest();
+            const id = document.querySelector('#post-id').value;
+            xhr.onload = function(){
+                if(xhr.status === 200){
+                    location = '/';
+                }else if(xhr.status === 403){
+                    alert(xhr.responseText);
+                }
+            }
+
+            xhr.open('DELETE', '/post/' + id );
+            xhr.send();
+        }
+
+    })
 
 
 

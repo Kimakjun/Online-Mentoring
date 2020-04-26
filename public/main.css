@@ -3,6 +3,11 @@
       box-sizing: border-box;
    }	
 
+   @font-face{
+	src: url(/BMJUA_ttf.ttf);
+	font-family: "JUA";
+}
+
     #navbar{
     	padding: 0 30px;
   		border-bottom: 1px solid #eee;
