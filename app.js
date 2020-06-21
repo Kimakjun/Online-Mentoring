@@ -6,45 +6,36 @@ const session = require('express-session');
 const flash = require('connect-flash');
 const passport = require('passport');
 const webSocket = require('./socket');
-
+const helmet = require('helmet');
+const hpp = require('hpp')
+const RedisStore = require('connect-redis')(session);
 require('dotenv').config();
-
-const bcrypt = require('bcrypt');
-const { sequelize, User, Post } = require('./models');
-const passportConfig = require('./passport');
- 
-const app = express();
-sequelize.sync();
-passportConfig(passport);
-
-
-
-const sessionMiddleware = session({
-  resave: false,
-  saveUninitialized: false,
-  secret: process.env.COOKIE_SECRET,
-  cookie: {
-    httpOnly: true,
-    secure: false,
-  },
-})
-
 
 const indexRouter = require('./routes/index');
 const authRouter = require('./routes/auth');
 const postRouter = require('./routes/post');
 const userRouter = require('./routes/user');  
 const roomRouter = require('./routes/room');
+const {sequelize} = require('./models');
+const passportConfig = require('./passport');
+const logger = require('./logger');
 
-  
+const app = express();
+sequelize.sync();
+passportConfig(passport);
+
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.set('port', process.env.PORT || 8001);
-   
 
+if(process.env.NODE_ENV === 'production'){
+  app.use(morgan('combined'));
+  app.use(helmet());
+  app.use(hpp());
+}else{
+  app.use(morgan('dev'));
+}
 
-
-app.use(morgan('dev'));
 app.use(express.static(path.join(__dirname, 'fonts')));
 app.use(express.static(path.join(__dirname, 'images')));
 app.use('/post', express.static(path.join(__dirname, 'images')));
@@ -53,24 +44,28 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser(process.env.COOKIE_SECRET));
-app.use(sessionMiddleware);
+const sessionOption = {
+  resave: false,
+  saveUninitialized: false,
+  secret: process.env.COOKIE_SECRET,
+  cookie: {
+    httpOnly: true,
+    secure: false,
+  },
+  store: new RedisStore({
+    host: process.env.REDIS_HOST,
+    port: process.env.REDIS_PORT,
+    pass: process.env.REDIS_PASSWORD,
+    logErrors: true,
+  }),
+};
+if(process.env.NODE_ENV === 'production'){
+  sessionOption.proxy = true;
+}
+app.use(session(sessionOption));
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
-
-
-
-
-app.use((req, res, next) => {
-
-
-   if(!req.session.nick && req.user){
-     req.session.nick = req.user.nick;     
-     console.log(req.session.nick);
-   }
-   
-  next();
-})
 
 
 
@@ -86,6 +81,8 @@ app.use('/room', roomRouter);
 app.use((req, res, next) => {
   const err = new Error('Not Found');
   err.status = 404;
+  logger.info('hello'); // console.info 대체
+  logger.error(err.message); // console.error 대체
   next(err);
 });
 
@@ -100,6 +97,4 @@ const server = app.listen(app.get('port'), () => {
   console.log(app.get('port'), '번 포트에서 대기중');
 });
 
-webSocket(server, app, sessionMiddleware);
-
-
+webSocket(server, app, session(sessionOption));

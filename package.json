@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon app"
+    "dev": "nodemon app",
+    "start": "cross-env NODE_ENV=production PORT=80 pm2 start app.js -i 0"
   },
   "author": "kimhakjun",
   "license": "MIT",
@@ -13,11 +14,15 @@
     "axios": "^0.19.2",
     "bcrypt": "^4.0.1",
     "connect-flash": "^0.1.1",
+    "connect-redis": "^3.0.0",
     "cookie-parser": "^1.4.5",
+    "cross-env": "^7.0.2",
     "dotenv": "^8.2.0",
     "ejs": "^3.0.2",
     "express": "^4.17.1",
     "express-session": "^1.17.0",
+    "helmet": "^3.23.1",
+    "hpp": "^0.2.3",
     "morgan": "^1.10.0",
     "multer": "^1.4.2",
     "mysql2": "^2.1.0",
@@ -25,8 +30,10 @@
     "passport": "^0.4.1",
     "passport-kakao": "^1.0.0",
     "passport-local": "^1.0.0",
+    "pm2": "^4.4.0",
     "sequelize": "^5.21.5",
     "socket.io": "^2.3.0",
+    "winston": "^3.1.0",
     "ws": "^7.2.3"
   },
   "devDependencies": {
