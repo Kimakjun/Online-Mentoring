@@ -42,7 +42,7 @@ module.exports = (server, app, sessionMiddleware) => {
             const userCount = currentRoom ? currentRoom.length : 0;
             console.log(userCount);
             if(userCount == 0){
-                axios.delete(`http://localhost/room/${roomId}`)
+                axios.delete(`http://35.233.231.215/room/${roomId}`)
                     .then(() => {
                         console.log('방제거 요청 성공');
                     })
