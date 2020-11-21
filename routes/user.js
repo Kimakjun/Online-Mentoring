@@ -25,7 +25,7 @@ router.get('/', isLoggedIn, async (req, res, next) => {
                 attributes: ['nick'],
             },
         })
-        console.log(nmpost)
+
         res.render('profile', {user : req.user, posts: nmpost, posts2: nmtpost});
     }catch(error){
         console.error(error);

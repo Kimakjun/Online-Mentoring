@@ -46,11 +46,6 @@ router.post('/', async(req, res, next) => {
         const io = req.app.get('io');
         io.of('/room').emit('newRoom', newRoom);
         res.redirect(`/room/${newRoom.id}?password=${req.body.password}`);
-        // 방생성
-
-        // 브라우저에 방생성 정보 전송
-
-        // 방생성자는 방을 만들고 채팅방으로 이동 
 
     }catch(error){
         console.log(error);
@@ -100,13 +95,12 @@ router.delete('/:id', async (req, res, next) => {
     try{
         await Chat.destroy({where : {chatroomId: req.params.id}});
         await ChatRoom.destroy({where: {id : req.params.id}});
-
-        //setTimeout 사용하는 이유 ? ? 
         res.send('OK');
 
         setTimeout(() => {
             req.app.get('io').of('/room').emit('removeRoom', req.params.id);            
         }, 2000)
+
     }catch(error){
         console.log(error);
         next(error);
@@ -115,9 +109,6 @@ router.delete('/:id', async (req, res, next) => {
 
 router.post('/:id/chat', async (req, res, next) => {
     try{
-        console.log('요청 도착', req.user);
-        
-        console.log(req.body.chat, req.params.id);
         const chat = await Chat.create({
             chat: req.body.chat,
             userId: req.user.id,

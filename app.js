@@ -81,7 +81,6 @@ app.use('/room', roomRouter);
 app.use((req, res, next) => {
   const err = new Error('Not Found');
   err.status = 404;
-  logger.info('hello'); // console.info 대체
   logger.error(err.message); // console.error 대체
   next(err);
 });
