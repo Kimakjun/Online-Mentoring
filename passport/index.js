@@ -1,10 +1,12 @@
 const local = require('./localStrategy');
 const kakao = require('./kakaoStrategy');
-
+const redis = require('redis');
+const util = require('util');
 const {User} = require('../models');
 
-const userList = [];
-const MAX_SIZE = 10;
+const client = redis.createClient({  host: "127.0.0.1",
+port: 6379,});
+client.get = util.promisify(client.get);
 
 module.exports = (passport) => {
 
@@ -13,22 +15,13 @@ module.exports = (passport) => {
     })
 
     passport.deserializeUser(async (id, done) => {
-        let deletedIndex = '';
-
-        const exUser = userList.filter((user, i) =>{
-            if(user.id === id){
-                deletedIndex = i;
-                return true;
-            }
-        })[0];  
-   
+        const exUser = await client.get(id);
         if(exUser){
-            userList.push(userList.splice(deletedIndex, 1)[0]);
-            done(null, exUser);
+            done(null, JSON.parse(exUser));
         }else{
+            console.log('캐싱 실패');
             const user = await User.findOne({where : {id}});
-            if(userList.length >= MAX_SIZE) userList.shift();
-            userList.push(user);
+            client.set(id, JSON.stringify(user));
             done(null, user);
         }
     })
